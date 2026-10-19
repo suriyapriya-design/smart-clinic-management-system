@@ -1,9 +1,12 @@
+```java
 package com.smartclinic.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Appointment {
@@ -12,8 +15,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long patientId;
-    private Long doctorId;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
     private String appointmentDate;
     private String appointmentTime;
     private String status;
@@ -21,34 +30,24 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(Long patientId, Long doctorId,
-                       String appointmentDate,
-                       String appointmentTime, String status) {
-        this.patientId = patientId;
-        this.doctorId = doctorId;
-        this.appointmentDate = appointmentDate;
-        this.appointmentTime = appointmentTime;
-        this.status = status;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
-    public Long getDoctorId() {
-        return doctorId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public String getAppointmentDate() {
@@ -75,3 +74,4 @@ public class Appointment {
         this.status = status;
     }
 }
+```
